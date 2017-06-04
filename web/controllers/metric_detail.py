@@ -115,9 +115,6 @@ class MetricData():
             FROM messages
             WHERE site_id = (SELECT site_id FROM sites WHERE site_key = :site_key)
                 AND message->>'type' = 'site_load'
-                AND ts >= :since
-                AND ts < :until
             GROUP BY message->>'p'
         ''', options).fetchall()
-
         return filter(lambda h: ';' not in h[0], map(list, hostnames))
